@@ -6,7 +6,7 @@ namespace Kata_Club.Katas.SumOfAngles
 {
     public class SumOfAngles
     {
-        public static int Angle(int numberOfAngles)
+        public int Angle(int numberOfAngles)
         {
             return (numberOfAngles - 2) * 180;
         }
