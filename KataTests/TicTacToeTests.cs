@@ -46,5 +46,24 @@ namespace KataTests
             var expected = 1;
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void GivenYwins_ReturnTwo()
+        {
+            // Arrange
+            var ticTacToe = new TicTacToe();
+
+            int[,] board = new int[,] {
+            { 2, 2, 2 },
+            { 0, 1, 1 },
+            { 0, 0, 0 } };
+
+            // Act
+            var actual = ticTacToe.IsSolved(board);
+
+            // Assert
+            var expected = 2;
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
