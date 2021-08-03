@@ -34,5 +34,14 @@ namespace KataTests
             int[,] board = new int[,] { { 2, 1, 2 }, { 2, 1, 1 }, { 1, 2, 1 } };
             Assert.Equal(0, tictactoe.IsSolved(board));
         }
+
+        [Fact]
+        public void Test()
+        {
+            var tictactoe = new TicTacToe();
+
+            int[,] board = new int[,] { { 2, 0, 2 }, { 2, 1, 1 }, { 1, 2, 1 } };
+            Assert.Equal(-1, tictactoe.IsSolved(board));
+        }
     }
 }

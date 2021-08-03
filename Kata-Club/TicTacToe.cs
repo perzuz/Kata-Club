@@ -20,7 +20,7 @@ namespace Kata_Club
                 (new int[]{ 0, 2}, new int[]{ 1, 1}, new int[]{ 2, 0})
             };
 
-            var foundZero = false;
+            var foundZero = false;            
 
             foreach (var lines in stuffToCheck)
             {
@@ -31,23 +31,18 @@ namespace Kata_Club
                 };
                 if (elements.Distinct().Count() == 1)
                 {
-                    return elements.First() == 0 ? -1 : elements.First();
+                    var winner = elements.First();
+                    if (winner == 0)
+                    {
+                        break;
+                    }
+                    return winner;
                 }
+
                 if (elements.Any(x => x == 0))
                 {
                     foundZero = true;
-                }
-                //var firstVal = board[lines.firstCell[0], lines.firstCell[1]];
-                //var secondVal = board[lines.secondCell[0], lines.secondCell[1]];
-                //var thirdVal = board[lines.thirdCell[0], lines.thirdCell[1]];
-                //if (firstVal == secondVal && secondVal == thirdVal)
-                //{
-                //    return firstVal == 0 ? -1 : firstVal;
-                //}
-                //if (firstVal == 0 || secondVal == 0 || thirdVal == 0)
-                //{
-                //    foundZero = true;
-                //}
+                }                
             }
 
             // If there's no zeros we are in stalemate
