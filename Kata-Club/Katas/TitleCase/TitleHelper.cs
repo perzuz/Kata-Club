@@ -23,14 +23,14 @@ namespace Kata_Club.Katas.TitleCase
 
                 if (!minorWordsList.Contains(titleWord) || i == 0)
                 {
-                    titleArr[i] = Capatlise(titleWord);
+                    titleArr[i] = Capitalise(titleWord);
                 }
             }
 
             return string.Join(" ", titleArr);
         }
 
-        private static string Capatlise(string input)
+        private static string Capitalise(string input)
         {
             return char.ToUpper(input[0]) + input.Substring(1);
         }
