@@ -101,5 +101,72 @@ namespace KataTests
             var expectedRound3Output = "Player 2 is on square 6";
             Assert.AreEqual(expectedRound3Output, actualRound3);
         }
+
+        [TestMethod]
+        public void ANewGameStarts_PlayerLandsOnStartOfLadder_PlayerIsTransportedToLadderEnd()
+        {
+            // Arrange
+            SnakesLadders game = new SnakesLadders();
+
+            // Act
+            var actualRound1 = game.play(1, 1);
+
+            // Assert
+            var expectedRound1Output = "Player 1 is on square 38";
+            Assert.AreEqual(expectedRound1Output, actualRound1);
+        }
+
+        [TestMethod]
+        public void PlayerLandsExactlyOnLastSquare_GameReturnsWinState()
+        {
+            // Arrange
+            SnakesLadders game = new SnakesLadders();
+
+            // Act
+            var actualRound1 = game.play(90, 7);
+
+            var actualRound2 = game.play(4, 1);
+
+            var actualRound3 = game.play(1, 2);
+
+            // Assert
+            var expectedRound1Output = "Player 1 is on square 97";
+            Assert.AreEqual(expectedRound1Output, actualRound1);
+
+            var expectedRound2Output = "Player 2 is on square 5";
+            Assert.AreEqual(expectedRound2Output, actualRound2);
+
+            var expectedRound3Output = "Player 1 Wins!";
+            Assert.AreEqual(expectedRound3Output, actualRound3);
+        }
+
+        [TestMethod]
+        public void APlayerHasWon_AnotherPlayerTriesToPlay_GameOverStateReturned()
+        {
+            // Arrange
+            SnakesLadders game = new SnakesLadders();
+
+            // Act
+            var actualRound1 = game.play(90, 7);
+
+            var actualRound2 = game.play(4, 1);
+
+            var actualRound3 = game.play(1, 2);
+
+            var extraRound = game.play(3, 2);
+
+            // Assert
+            var expectedRound1Output = "Player 1 is on square 97";
+            Assert.AreEqual(expectedRound1Output, actualRound1);
+
+            var expectedRound2Output = "Player 2 is on square 5";
+            Assert.AreEqual(expectedRound2Output, actualRound2);
+
+            var expectedRound3Output = "Player 1 Wins!";
+            Assert.AreEqual(expectedRound3Output, actualRound3);
+
+            var expectedExtraRoundOutput = "Game over!";
+            Assert.AreEqual(expectedExtraRoundOutput, extraRound);
+        }
     }
 }

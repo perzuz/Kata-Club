@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Kata_Club.Katas.SnakesAndLadders
@@ -9,12 +10,21 @@ namespace Kata_Club.Katas.SnakesAndLadders
     {
         public SnakesLadders()
         {
+            _gameOver = false;
             InitialisePlayers();
         }
 
         public string play(int die1, int die2)
         {
+            if (_gameOver) return "Game over!";
+
             MovePlayer(_playerTurn, die1 + die2);
+
+            if (_players[_playerTurn].Position == 100)
+            {
+                _gameOver = true;
+                return $"{_players[_playerTurn].Name} Wins!";
+            }
 
             var gameState = _players[_playerTurn].GetGameState();
 
@@ -38,7 +48,10 @@ namespace Kata_Club.Katas.SnakesAndLadders
         }
 
         private List<Player> _players;
+        private List<Shortcut> _shortcuts;
+
         private int _playerTurn;
+        private bool _gameOver;
 
         private void MovePlayer(int playerIndex, int numberOfPositions)
         {
@@ -56,6 +69,24 @@ namespace Kata_Club.Katas.SnakesAndLadders
                 _players.Add(new Player($"Player {i + 1}"));
             }
         }
+
+        private void InitialiseShortcuts()
+        {
+            List<Shortcut> ladders = new List<Shortcut>
+            {
+                new Shortcut(2, 38),
+                new Shortcut(7, 14),
+                new Shortcut(8, 31),
+                new Shortcut(15, 26),
+                new Shortcut(21, 42),
+                new Shortcut(28, 84),
+                new Shortcut(36, 44),
+                new Shortcut(51, 67),
+                new Shortcut(71, 91),
+                new Shortcut(78, 98),
+                new Shortcut(87, 94),
+            };
+        }
     }
 
     public class Player
@@ -72,5 +103,16 @@ namespace Kata_Club.Katas.SnakesAndLadders
         {
             return $"{Name} is on square {Position}";
         }
+    }
+
+    public class Shortcut
+    {
+        public Shortcut(int startSquare, int destinationSquare)
+        {
+            StartSquare = startSquare;
+            DestinationSquare = destinationSquare;
+        }
+        public int StartSquare { get; set; }
+        public int DestinationSquare { get; set; }
     }
 }
