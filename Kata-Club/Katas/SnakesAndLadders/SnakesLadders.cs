@@ -12,6 +12,7 @@ namespace Kata_Club.Katas.SnakesAndLadders
         {
             _gameOver = false;
             InitialisePlayers();
+            InitialiseShortcuts();
         }
 
         public string play(int die1, int die2)
@@ -55,7 +56,16 @@ namespace Kata_Club.Katas.SnakesAndLadders
 
         private void MovePlayer(int playerIndex, int numberOfPositions)
         {
-            _players[playerIndex].Position += numberOfPositions;
+            var currentPlayer = _players[_playerTurn];
+
+            currentPlayer.Position += numberOfPositions;
+
+            var shortcut = _shortcuts.SingleOrDefault(x => x.StartSquare == currentPlayer.Position);
+
+            if (shortcut != null)
+            {
+                currentPlayer.Position = shortcut.DestinationSquare;
+            }
         }
 
         private void InitialisePlayers()
@@ -72,6 +82,8 @@ namespace Kata_Club.Katas.SnakesAndLadders
 
         private void InitialiseShortcuts()
         {
+            _shortcuts = new List<Shortcut>();
+
             List<Shortcut> ladders = new List<Shortcut>
             {
                 new Shortcut(2, 38),
@@ -86,6 +98,23 @@ namespace Kata_Club.Katas.SnakesAndLadders
                 new Shortcut(78, 98),
                 new Shortcut(87, 94),
             };
+
+            List<Shortcut> snakes = new List<Shortcut>
+            {
+                new Shortcut(16, 6),
+                new Shortcut(46, 25),
+                new Shortcut(49, 11),
+                new Shortcut(62, 19),
+                new Shortcut(64, 60),
+                new Shortcut(74, 53),
+                new Shortcut(89, 68),
+                new Shortcut(92, 88),
+                new Shortcut(95, 75),
+                new Shortcut(99, 80),
+            };
+
+            _shortcuts.AddRange(ladders);
+            _shortcuts.AddRange(snakes);
         }
     }
 
@@ -95,14 +124,13 @@ namespace Kata_Club.Katas.SnakesAndLadders
         {
             Name = name;
         }
-
-        public int Position { get; set; }
-        public string Name { get; private set; }
-
         public string GetGameState()
         {
             return $"{Name} is on square {Position}";
         }
+
+        public int Position { get; set; }
+        public string Name { get; private set; }
     }
 
     public class Shortcut

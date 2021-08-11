@@ -117,6 +117,21 @@ namespace KataTests
         }
 
         [TestMethod]
+        public void ANewGameStarts_PlayerLandsOnStartOfSnake_PlayerIsTransportedToSnakeEnd()
+        {
+            // Arrange
+            SnakesLadders game = new SnakesLadders();
+
+            // Act
+            var actualRound1 = game.play(6, 6);
+            var actualRound2 = game.play(3, 1);
+
+            // Assert
+            var expectedRound2Output = "Player 1 is on square 6";
+            Assert.AreEqual(expectedRound2Output, actualRound2);
+        }
+
+        [TestMethod]
         public void PlayerLandsExactlyOnLastSquare_GameReturnsWinState()
         {
             // Arrange
