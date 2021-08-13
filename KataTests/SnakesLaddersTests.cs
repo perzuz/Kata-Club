@@ -6,6 +6,7 @@ using System.Text;
 
 namespace KataTests
 {
+    // https://www.codewars.com/kata/587136ba2eefcb92a9000027/train/csharp
     [TestClass]
     public class SnakesLaddersTests
     {
@@ -128,6 +129,36 @@ namespace KataTests
 
             // Assert
             var expectedRound2Output = "Player 1 is on square 6";
+            Assert.AreEqual(expectedRound2Output, actualRound2);
+        }
+
+        [TestMethod]
+        public void APlayerIsNearTheFinalSpace_PlayerRollsHigherThanNeccesary_PlayerBouncesBackExtraSpaces()
+        {
+            // Arrange
+            SnakesLadders game = new SnakesLadders();
+
+            // Act
+            var actualRound1 = game.play(47, 47);
+            var actualRound2 = game.play(5, 4);
+
+            // Assert
+            var expectedRound2Output = "Player 1 is on square 97";
+            Assert.AreEqual(expectedRound2Output, actualRound2);
+        }
+
+        [TestMethod]
+        public void APlayerBouncesBackFromEnd_PlayerLandsOnSnake_PlayerEndsAtBottomOfSnake()
+        {
+            // Arrange
+            SnakesLadders game = new SnakesLadders();
+
+            // Act
+            var actualRound1 = game.play(47, 47);
+            var actualRound2 = game.play(3, 4);
+
+            // Assert
+            var expectedRound2Output = "Player 1 is on square 80";
             Assert.AreEqual(expectedRound2Output, actualRound2);
         }
 

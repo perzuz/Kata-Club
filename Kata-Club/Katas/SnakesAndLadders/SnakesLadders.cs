@@ -5,7 +5,6 @@ using System.Text;
 
 namespace Kata_Club.Katas.SnakesAndLadders
 {
-    // https://www.codewars.com/kata/587136ba2eefcb92a9000027/train/csharp
     public class SnakesLadders
     {
         public SnakesLadders()
@@ -19,25 +18,19 @@ namespace Kata_Club.Katas.SnakesAndLadders
         {
             if (_gameOver) return "Game over!";
 
-            MovePlayer(_playerTurn, die1 + die2);
+            MoveCurrentPlayer(die1 + die2);
 
-            if (_players[_playerTurn].Position == 100)
+            if (_players[_playerTurnIdx].Position == 100)
             {
                 _gameOver = true;
-                return $"{_players[_playerTurn].Name} Wins!";
+                return $"{_players[_playerTurnIdx].Name} Wins!";
             }
 
-            var gameState = _players[_playerTurn].GetGameState();
+            var gameState = _players[_playerTurnIdx].GetGameState();
 
-            if (die1 == die2) return gameState;
-
-            if (_playerTurn < _players.Count - 1)
+            if (die1 != die2)
             {
-                _playerTurn++;
-            }
-            else
-            {
-                _playerTurn = 0;
+                IncrementPlayerTurn();
             }
 
             return gameState;
@@ -51,20 +44,40 @@ namespace Kata_Club.Katas.SnakesAndLadders
         private List<Player> _players;
         private List<Shortcut> _shortcuts;
 
-        private int _playerTurn;
+        private int _playerTurnIdx;
         private bool _gameOver;
 
-        private void MovePlayer(int playerIndex, int numberOfPositions)
+        private void MoveCurrentPlayer(int numberOfPositions)
         {
-            var currentPlayer = _players[_playerTurn];
+            var currentPlayer = _players[_playerTurnIdx];
 
-            currentPlayer.Position += numberOfPositions;
+            if (currentPlayer.Position + numberOfPositions > 100)
+            {
+                var bounceBackPosition = 100 - (currentPlayer.Position + numberOfPositions - 100);
+                currentPlayer.Position = bounceBackPosition;
+            }
+            else
+            {
+                currentPlayer.Position += numberOfPositions;
+            }
 
             var shortcut = _shortcuts.SingleOrDefault(x => x.StartSquare == currentPlayer.Position);
 
             if (shortcut != null)
             {
                 currentPlayer.Position = shortcut.DestinationSquare;
+            }
+        }
+
+        private void IncrementPlayerTurn()
+        {
+            if (_playerTurnIdx < _players.Count - 1)
+            {
+                _playerTurnIdx++;
+            }
+            else
+            {
+                _playerTurnIdx = 0;
             }
         }
 
